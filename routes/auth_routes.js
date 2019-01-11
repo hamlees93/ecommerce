@@ -11,4 +11,11 @@ router.post("/register", celebrate({
     }
 }), AuthController.register);
 
+router.post("/login", celebrate({
+    body: {
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+    }
+}), AuthController.login);
+
 module.exports = router;

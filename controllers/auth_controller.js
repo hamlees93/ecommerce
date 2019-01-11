@@ -14,7 +14,17 @@ function register(req, res, next) {
     });
 };
 
-function login() {}
+async function login(req, res, next) {
+    const { email, password } = req.body;
+    try {
+        const { user } = await UserModel.authenticate()(email, password);
+        // if (error) throw error;
+        const token = JWTService.createJWT(user._id);
+        res.json(token);
+    } catch (error) {
+        return next(error);
+    }
+}
 
 module.exports = {
     register,
